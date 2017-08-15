@@ -1,0 +1,21 @@
+sudo: false
+language: java
+jdk:
+  - oraclejdk8
+script:
+  - mvn package
+after_success:
+    -
+    'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+        if [ ${TRAVIS_BRANCH} = "master" ]; then
+            pip install --user awscli;
+            export PATH=$PATH:$HOME/.local/bin;
+            echo "Deploying to a lambda function!";
+            aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://target/PdfWatermarkerLambda.jar;
+            echo "Deployed!";
+          else
+            echo "Skipping deploy because branch is not master";
+          fi
+    else
+        echo "Skipping deploy because this is a pull request";
+    fi'
