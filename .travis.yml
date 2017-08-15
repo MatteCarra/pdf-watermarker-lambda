@@ -10,7 +10,7 @@ after_success:
           pip install --user awscli;
           export PATH=$PATH:$HOME/.local/bin;
           echo "Deploying to lambda!";
-          aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://target/PreviewsLambda.jar;
+          aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://target/PdfWatermarkerLambda.jar;
           echo "Deployed!";
         else
           echo "Skipping deploy because branch is not master";
