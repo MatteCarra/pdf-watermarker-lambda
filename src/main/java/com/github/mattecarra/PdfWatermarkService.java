@@ -32,7 +32,8 @@ public class PdfWatermarkService {
 
     public static void main(String[] args) throws Throwable {
         WatermarkInput i = new WatermarkInput();
-        i.setS3OutputKey("1");
+        i.setS3InputFileKey("testInput.pdf");
+        i.setS3OutputKey("testOutput.pdf");
         i.setUser("MatteCarra");
         i.setLicenseText("Product sold to MatteCarra");
         PdfWatermarkService s = new PdfWatermarkService();
