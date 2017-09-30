@@ -41,9 +41,7 @@ public class PdfWatermarkService {
     }
 
     public Integer handleRequest(WatermarkInput watermarkInput, Context context) throws Throwable {
-        String BUCKET = System.getenv("S3_BUCKET");
-
-        S3Object s3Object = s3.getObject(BUCKET, watermarkInput.getS3InputFileKey());
+        S3Object s3Object = s3.getObject(watermarkInput.getS3InputBucket(), watermarkInput.getS3InputFileKey());
 
         File file = null;
         try {
@@ -89,7 +87,7 @@ public class PdfWatermarkService {
             doc.close();
 
             String objectKey = watermarkInput.getS3OutputKey();
-            s3.putObject(new PutObjectRequest(BUCKET, objectKey, file).withStorageClass(StorageClass.ReducedRedundancy));
+            s3.putObject(new PutObjectRequest(watermarkInput.getS3OutputBucket(), objectKey, file).withStorageClass(StorageClass.ReducedRedundancy));
             return 1;
         } finally {
             if(file != null) file.delete();
