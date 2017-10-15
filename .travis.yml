@@ -9,9 +9,9 @@ after_success:
         if [ ${TRAVIS_BRANCH} = "master" ]; then
           pip install --user awscli;
           export PATH=$PATH:$HOME/.local/bin;
-          echo "Deploying to lambda!";
-          aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file fileb://target/PdfWatermarkerLambda.jar;
-          echo "Deployed!";
+          echo "Uploading artifact to s3";
+          aws s3 cp target/PdfWatermarkerLambda.jar s3://$BUCKET/$FUNCTION_NAME;
+          echo "Uploaded!";
         else
           echo "Skipping deploy because branch is not master";
         fi
